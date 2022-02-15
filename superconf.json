@@ -1,0 +1,15 @@
+{
+  "env": {
+    "name": "vpc-dev",
+    "zookeeper": {
+      "host": "10.10.1.102",
+      "port": 2181,
+      "auth_data": {
+        "scheme": "digest",
+        "auth": "zkr:gDqI4s7TidXcVSqW"
+      }
+    },
+    "deploy": "dev",
+    "group": "weike"
+  }
+}
