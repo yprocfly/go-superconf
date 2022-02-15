@@ -1,4 +1,4 @@
-package superconf
+package utils
 
 import (
 	"encoding/json"
@@ -29,9 +29,9 @@ type Config struct {
 	Env Env
 }
 
-func init() {
-	var SuperConfig Config
+var SuperConfig Config
 
+func init() {
 	rootPath, _ := os.Getwd()
 	filePath := path.Join(rootPath, "superconf.json")
 	fileContent, err := os.ReadFile(filePath)
