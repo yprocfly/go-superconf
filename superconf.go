@@ -5,6 +5,6 @@ import (
 	"github.com/yprocfly/go-superconf/utils"
 )
 
-func test() {
+func Get() {
 	fmt.Println(utils.SuperConfig)
 }

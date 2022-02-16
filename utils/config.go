@@ -2,7 +2,6 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"path"
 )
@@ -29,19 +28,29 @@ type Config struct {
 	Env Env
 }
 
+// SuperConfig 保存zk的相关配置信息
 var SuperConfig Config
 
+// PrefixPath zk节点路径前缀
+var PrefixPath string
+
+// 初始化路径前缀
+func initPrefixPath(superConfig Config) {
+	PrefixPath = "/superconf/" + superConfig.Env.Name + "/" + superConfig.Env.Group
+}
+
 func init() {
+	// 获取 superconf 配置的路径，设置在项目的根目录下，文件名为 superconf.json
 	rootPath, _ := os.Getwd()
 	filePath := path.Join(rootPath, "superconf.json")
 	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
-		fmt.Println("读取superconf配置失败", err)
-		return
+		panic("读取superconf配置失败：" + err.Error())
 	}
 	err = json.Unmarshal(fileContent, &SuperConfig)
 	if err != nil {
-		fmt.Println("解析superconf配置失败", err)
-		return
+		panic("解析superconf配置失败：" + err.Error())
 	}
+
+	initPrefixPath(SuperConfig)
 }
