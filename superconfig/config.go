@@ -2,6 +2,7 @@ package superconfig
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path"
 )
@@ -9,8 +10,8 @@ import (
 // SuperConfig 保存zk的相关配置信息
 var SuperConfig Config
 
-// PrefixPath zk节点路径前缀
-var PrefixPath string
+// PrefixZkPath zk节点路径前缀
+var PrefixZkPath string
 
 // 获取 superconf 配置
 // 配置文件保存在项目的根目录下，文件名为 superconf.json
@@ -33,11 +34,11 @@ func getSuperConfig() {
 }
 
 // 初始化路径前缀
-func initPrefixPath() {
-	PrefixPath = "/superconf/" + SuperConfig.Env.Name + "/" + SuperConfig.Env.Group
+func initPrefixZkPath() {
+	PrefixZkPath = fmt.Sprintf("/superconf/%s/%s", SuperConfig.Env.Name, SuperConfig.Env.Group)
 }
 
 func init() {
 	getSuperConfig()
-	initPrefixPath()
+	initPrefixZkPath()
 }
