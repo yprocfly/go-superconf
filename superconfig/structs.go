@@ -21,8 +21,3 @@ type Env struct {
 type Config struct {
 	Env Env `json:"env"`
 }
-
-type RegNode struct {
-	NodePath   string
-	HandleFunc func(data []byte)
-}
