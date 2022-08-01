@@ -2,21 +2,22 @@ package superconfig
 
 import (
 	"fmt"
-	"github.com/go-zookeeper/zk"
 	"path"
+
+	"github.com/go-zookeeper/zk"
 )
 
 var RegNodeMap = make(map[string]func(data []byte))
 
 // GetFullPath 获取zk节点完整路径
-// @param zkPath zk节点路径，去掉前缀部分
+// zkPath zk节点路径，去掉前缀部分
 func GetFullPath(zkPath string) string {
 	return path.Join(PrefixZkPath, zkPath)
 }
 
 // RegisterNode 注册节点【装饰器模式】
-// @param zkPath zk节点路径，去掉前缀部分
-// @param handleFunc 被装饰的方法，一般用于把zk配置赋值
+// zkPath zk节点路径，去掉前缀部分
+// handleFunc 被装饰的方法，一般用于把zk配置赋值
 func RegisterNode(zkPath string, handleFunc func(data []byte)) {
 	fullPath := GetFullPath(zkPath)
 
@@ -34,7 +35,7 @@ func RegisterNode(zkPath string, handleFunc func(data []byte)) {
 }
 
 // IsPathExists 判断zk节点路径是否存在
-// @param fullPath zk节点完整路径
+// fullPath zk节点完整路径
 func IsPathExists(fullPath string) bool {
 	exists, _, err := ZkConn.Exists(fullPath)
 	if err != nil {
@@ -45,7 +46,7 @@ func IsPathExists(fullPath string) bool {
 }
 
 // GetConfigAndWatch 获取配置，并监听节点
-// @param fullPath zk节点路径，去掉前缀部分
+// fullPath zk节点路径，去掉前缀部分
 func GetConfigAndWatch(fullPath string) []byte {
 	data, _, event, err := ZkConn.GetW(fullPath)
 	if err != nil {
